@@ -1,0 +1,805 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Travels - Explore India's Wonders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        #home {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--secondary);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(233, 196, 106, 0.4);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 196, 106, 0.6);
+            background-color: #f1b52b;
+        }
+
+        /* Packages Section */
+        #packages {
+            padding: 6rem 2rem;
+            background-color: #e9f5f4;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .packages-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .package {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .package.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .package-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .package-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .package:hover .package-img img {
+            transform: scale(1.1);
+        }
+
+        .package-content {
+            padding: 1.5rem;
+        }
+
+        .package h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .package p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .package-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .package-btn:hover {
+            background-color: #21867a;
+            transform: translateY(-2px);
+        }
+
+        /* Reviews Section */
+        #reviews {
+            padding: 6rem 2rem;
+            background: linear-gradient(rgba(42, 157, 143, 0.1), rgba(42, 157, 143, 0.1));
+        }
+
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .review {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .review.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .review::before {
+            content: '\201C';
+            font-size: 5rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .review p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .review-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid var(--accent);
+        }
+
+        .author-info h4 {
+            color: var(--secondary);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-style: normal;
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .rating {
+            color: var(--accent);
+            margin-top: 0.5rem;
+        }
+
+        /* Booking Section */
+        #book {
+            padding: 6rem 2rem;
+            background-color: var(--light);
+        }
+
+        .book-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .book-image {
+            background: url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+        }
+
+        .book-form {
+            padding: 3rem;
+        }
+
+        .book-form h1 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .book-form p {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
+        }
+
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #21867a;
+            transform: translateY(-2px);
+        }
+
+        #thank-you-message {
+            text-align: center;
+            padding: 1rem;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 5px;
+            margin-top: 1rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .book-container {
+                grid-template-columns: 1fr;
+            }
+
+            .book-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="#home" class="logo"><i class="fas fa-plane"></i>Success Travels</a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#book">Book Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="hero-content">
+            <h2>Your Journey Begins Here</h2>
+            <p>Explore India's incredible diversity with our expertly crafted tours and unforgettable experiences.</p>
+            <a href="#packages" class="cta-btn">Explore Packages</a>
+        </div>
+    </section>
+
+    <section id="packages">
+        <div class="section-title">
+            <h2>Explore Our Packages</h2>
+            <p>Discover India's most captivating destinations with our curated experiences</p>
+        </div>
+        <div class="packages-container">
+            <div class="package">
+                <div class="package-img">
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="State Tours">
+                </div>
+                <div class="package-content">
+                    <h3>State Tours</h3>
+                    <p>Immerse yourself in the rich culture and stunning landscapes of India's diverse states.</p>
+                    <div class="package-price">From ₹15,999</div>
+                    <a href="#book" class="package-btn">Book Now</a>
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-img">
+                    <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="City Trips">
+                </div>
+                <div class="package-content">
+                    <h3>City Trips</h3>
+                    <p>Experience the vibrant energy and hidden gems of India's most exciting cities.</p>
+                    <div class="package-price">From ₹9,999</div>
+                    <a href="#book" class="package-btn">Book Now</a>
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-img">
+                    <img src="https://images.unsplash.com/photo-1503917988258-f87a78e3c995?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Custom Packages">
+                </div>
+                <div class="package-content">
+                    <h3>Custom Packages</h3>
+                    <p>Create your dream itinerary with our personalized travel planning service.</p>
+                    <div class="package-price">Custom Pricing</div>
+                    <a href="#book" class="package-btn">Get a Quote</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <div class="section-title">
+            <h2>What Our Travelers Say</h2>
+            <p>Hear from our satisfied customers about their experiences</p>
+        </div>
+        <div class="reviews-container">
+            <div class="review">
+                <p>The best travel experience I've ever had. Success Travels took care of every detail, allowing us to fully enjoy Rajasthan's beauty. Highly recommend!</p>
+                <div class="review-author">
+                    <img src="data:image/jpeg;base64,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" alt="Varun Gupta">
+                    <div class="author-info">
+                        <h4>Varun Gupta</h4>
+                        <p>Delhi, India</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="review">
+                <p>Amazing tours and exceptional customer service. Our Kerala backwaters trip was magical thanks to Success Travels' perfect planning.</p>
+                <div class="review-author">
+                    <img src="data:image/jpeg;base64,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" alt="Rohan Mehra">
+                    <div class="author-info">
+                        <h4>Rohan Mehra</h4>
+                        <p>Mumbai, India</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="review">
+                <p>My experience was outstanding! Success Travels provided quality packages at affordable prices. 10/10 would book again.</p>
+                <div class="review-author">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpPynyIsxbqocr5XS5IQXMbKSOxv6EKy9-Ew&s" alt="Reshma Khan">
+                    <div class="author-info">
+                        <h4>Reshma Khan</h4>
+                        <p>Bangalore, India</p>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="book">
+        <div class="book-container">
+            <div class="book-image"></div>
+            <div class="book-form">
+                <h1>Book Your Tour</h1>
+                <p>Plan your perfect getaway with just a few details. Our team will contact you within 24 hours.</p>
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" id="destination" name="destination" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Travel Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Number of Guests</label>
+                        <input type="number" id="guests" name="guests" min="1" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Booking Request</button>
+                    <div id="thank-you-message">Thank you for booking! Your request will be reviewed within 24 hours.</div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Success Travels</h3>
+                <p>We are passionate about showcasing India's incredible diversity through unforgettable travel experiences.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#home">Home</a></p>
+                <p><a href="#packages">Tour Packages</a></p>
+                <p><a href="#reviews">Customer Reviews</a></p>
+                <p><a href="#book">Book a Tour</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Era University, Lucknow, India</p>
+                <p><i class="fas fa-phone"></i> +91 XXXXXXXXX</p>
+                <p><i class="fas fa-envelope"></i> info@successtravels.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Success Travels</p>
+            <p>Designed by Faizila Khan</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Booking form submission
+            const bookingForm = document.getElementById("booking-form");
+            const thankYouMessage = document.getElementById("thank-you-message");
+
+            bookingForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                thankYouMessage.style.display = "block";
+                bookingForm.reset();
+                thankYouMessage.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+
+            // Animate packages and reviews on scroll
+            const animateOnScroll = () => {
+                const packages = document.querySelectorAll('.package');
+                const reviews = document.querySelectorAll('.review');
+                const scrollPosition = window.innerHeight + window.scrollY;
+
+                packages.forEach((package, index) => {
+                    const packagePosition = package.offsetTop;
+                    if (scrollPosition > packagePosition + 100) {
+                        setTimeout(() => {
+                            package.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+
+                reviews.forEach((review, index) => {
+                    const reviewPosition = review.offsetTop;
+                    if (scrollPosition > reviewPosition + 100) {
+                        setTimeout(() => {
+                            review.classList.add('animate');
+                        }, index * 200);
+                    }
+                });
+            };
+
+            // Initialize animations
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('load', animateOnScroll);
+
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.padding = '0.5rem 0';
+                    header.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+                } else {
+                    header.style.padding = '1rem 0';
+                    header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
